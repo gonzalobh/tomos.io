@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOMOS — Modern AI products</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #ffffff;
+        --bg-alt: #f7f7f9;
+        --text: #0b0b0d;
+        --text-soft: #5f5f6b;
+        --line: rgba(12, 12, 16, 0.08);
+        --shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", "SF Pro Display", "SF Pro Text", system-ui, -apple-system,
+          "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.4;
+        letter-spacing: -0.02em;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1180px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid transparent;
+        z-index: 10;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 28px 0;
+        gap: 24px;
+      }
+
+      .nav img {
+        height: 26px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 32px;
+        font-size: 0.88rem;
+        color: var(--text-soft);
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+      }
+
+      .nav-links a {
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 120px 0 140px;
+        background: linear-gradient(180deg, #ffffff 0%, #f8f8fa 100%);
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 56px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.4em;
+        font-size: 0.7rem;
+        color: var(--text-soft);
+        margin-bottom: 16px;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 6vw, 5.2rem);
+        font-weight: 600;
+        margin-bottom: 22px;
+      }
+
+      .hero p {
+        font-size: clamp(1.1rem, 2vw, 1.5rem);
+        color: var(--text-soft);
+        max-width: 540px;
+      }
+
+      .hero-card {
+        border-radius: 32px;
+        padding: 42px;
+        background: linear-gradient(150deg, #ffffff 0%, #f3f3f6 100%);
+        box-shadow: var(--shadow);
+        display: grid;
+        gap: 20px;
+      }
+
+      .hero-card strong {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        color: var(--text-soft);
+      }
+
+      .hero-card h2 {
+        font-size: clamp(1.8rem, 3vw, 2.4rem);
+        font-weight: 500;
+      }
+
+      .hero-card ul {
+        list-style: none;
+        display: grid;
+        gap: 14px;
+        font-size: 1rem;
+        color: var(--text-soft);
+      }
+
+      .hero-card li {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 10px;
+      }
+
+      .section {
+        padding: 110px 0;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(2.2rem, 5vw, 4rem);
+        font-weight: 500;
+      }
+
+      .section-title p {
+        margin-top: 18px;
+        font-size: 1.1rem;
+        color: var(--text-soft);
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 48px;
+        align-items: center;
+      }
+
+      .product-copy h3 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        margin-bottom: 12px;
+      }
+
+      .product-copy .tagline {
+        font-size: 1.2rem;
+        color: var(--text-soft);
+        margin-bottom: 18px;
+      }
+
+      .product-copy p {
+        color: var(--text-soft);
+        font-size: 1.05rem;
+        max-width: 420px;
+      }
+
+      .product-media img {
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .feature-strip {
+        background: var(--bg-alt);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 32px;
+      }
+
+      .feature-card {
+        padding: 32px;
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .feature-card h4 {
+        font-size: 1.1rem;
+        margin-bottom: 8px;
+      }
+
+      .feature-card p {
+        color: var(--text-soft);
+        font-size: 0.98rem;
+      }
+
+      .closing {
+        padding: 120px 0 140px;
+        text-align: center;
+        background: linear-gradient(180deg, #f7f7f9 0%, #ffffff 80%);
+      }
+
+      .closing h2 {
+        font-size: clamp(2.4rem, 5vw, 4.2rem);
+        font-weight: 500;
+      }
+
+      footer {
+        padding: 48px 0 64px;
+        text-align: center;
+        color: var(--text-soft);
+        font-size: 0.85rem;
+        border-top: 1px solid var(--line);
+      }
+
+      .fade-up {
+        opacity: 0;
+        transform: translateY(18px);
+        animation: fadeUp 0.9s ease forwards;
+      }
+
+      .delay-1 {
+        animation-delay: 0.15s;
+      }
+
+      .delay-2 {
+        animation-delay: 0.3s;
+      }
+
+      .delay-3 {
+        animation-delay: 0.45s;
+      }
+
+      @keyframes fadeUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 860px) {
+        header {
+          position: static;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hero {
+          padding: 90px 0 110px;
+        }
+
+        .section {
+          padding: 80px 0;
+        }
+
+        .hero-card {
+          padding: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <img src="logo-tomos-small.svg" alt="Tomos" />
+        <nav class="nav-links">
+          <a href="#products">Products</a>
+          <a href="#platform">Platform</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow fade-up">TOMOS</p>
+            <h1 class="fade-up delay-1">AI that feels effortless.</h1>
+            <p class="fade-up delay-2">
+              A suite of intelligent products crafted for modern teams. Quietly powerful,
+              beautifully simple.
+            </p>
+          </div>
+          <div class="hero-card fade-up delay-3">
+            <strong>Live Metrics</strong>
+            <h2>Modern operations, orchestrated by AI.</h2>
+            <ul>
+              <li>
+                <span>Response time</span>
+                <span>0.4s</span>
+              </li>
+              <li>
+                <span>Tasks automated</span>
+                <span>92%</span>
+              </li>
+              <li>
+                <span>Clarity index</span>
+                <span>99</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="platform" class="section">
+        <div class="container section-title">
+          <h2 class="fade-up">Designed for calm, built for scale.</h2>
+          <p class="fade-up delay-1">
+            Every interaction is intentional. Every workflow is intelligent.
+          </p>
+        </div>
+      </section>
+
+      <section id="products" class="section">
+        <div class="container product-grid">
+          <div class="product-copy fade-up">
+            <p class="eyebrow">Product 01</p>
+            <h3>Tomos Expenses</h3>
+            <div class="tagline">Finance automation in a single view.</div>
+            <p>
+              Capture and understand spending instantly, with automated insights that
+              keep teams moving.
+            </p>
+          </div>
+          <div class="product-media fade-up delay-1">
+            <img src="t1.png" alt="Tomos Expenses interface" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section feature-strip">
+        <div class="container feature-grid">
+          <div class="feature-card fade-up">
+            <h4>Invisible intelligence</h4>
+            <p>AI works in the background so teams stay focused on the work that matters.</p>
+          </div>
+          <div class="feature-card fade-up delay-1">
+            <h4>Precision workflows</h4>
+            <p>Automated routing and approval that feels designed for human rhythm.</p>
+          </div>
+          <div class="feature-card fade-up delay-2">
+            <h4>Quiet confidence</h4>
+            <p>Minimal surfaces, maximum clarity, and the metrics to prove it.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container product-grid">
+          <div class="product-media fade-up">
+            <img src="t4.png" alt="Tomos Bot experience" />
+          </div>
+          <div class="product-copy fade-up delay-1">
+            <p class="eyebrow">Product 02</p>
+            <h3>Tomos Bot</h3>
+            <div class="tagline">Instant answers, consistent tone.</div>
+            <p>
+              Train an AI assistant on your knowledge base and deliver thoughtful replies
+              every time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing" id="contact">
+        <div class="container">
+          <h2 class="fade-up">Modern, focused, unmistakably Tomos.</h2>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <img src="logo-tomos.webp" alt="Tomos" style="height: 28px; margin: 0 auto 12px" />
+        <div>© 2024 TOMOS. Crafted for modern teams.</div>
+      </div>
+    </footer>
+  </body>
+</html>
