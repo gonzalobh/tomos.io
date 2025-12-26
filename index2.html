@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOMOS — AI that feels human</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #06060a;
+        --bg-alt: #0f1120;
+        --surface: rgba(255, 255, 255, 0.08);
+        --surface-strong: rgba(255, 255, 255, 0.14);
+        --text: #f7f7fb;
+        --text-soft: rgba(247, 247, 251, 0.7);
+        --accent: #c4f0ff;
+        --accent-strong: #7cd6ff;
+        --accent-warm: #ffbdb0;
+        --line: rgba(255, 255, 255, 0.1);
+        --shadow: 0 30px 80px rgba(10, 12, 25, 0.4);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", "SF Pro Display", system-ui, -apple-system, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #1a1d36 0%, #0a0a12 45%, #05050a 100%);
+        color: var(--text);
+        line-height: 1.5;
+        letter-spacing: -0.01em;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1140px, 92vw);
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(18px);
+        background: linear-gradient(180deg, rgba(6, 6, 10, 0.95), rgba(6, 6, 10, 0.5));
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 22px 0;
+        gap: 24px;
+      }
+
+      .nav img {
+        height: 26px;
+        filter: drop-shadow(0 4px 18px rgba(127, 214, 255, 0.25));
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 24px;
+        font-size: 0.9rem;
+        color: var(--text-soft);
+      }
+
+      .nav-links a {
+        transition: color 0.3s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 130px 0 120px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 20% 20%, rgba(124, 214, 255, 0.35), transparent 55%),
+          radial-gradient(circle at 80% 10%, rgba(255, 189, 176, 0.35), transparent 55%),
+          radial-gradient(circle at 50% 80%, rgba(130, 255, 214, 0.2), transparent 60%);
+        opacity: 0.9;
+        pointer-events: none;
+      }
+
+      .hero-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 48px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.32em;
+        font-size: 0.72rem;
+        color: var(--accent);
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 6vw, 5.2rem);
+        font-weight: 600;
+        line-height: 1.05;
+        margin-bottom: 22px;
+      }
+
+      .hero p {
+        font-size: clamp(1.1rem, 2vw, 1.45rem);
+        color: var(--text-soft);
+        max-width: 520px;
+        margin-bottom: 28px;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        padding: 14px 28px;
+        border-radius: 999px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border: 1px solid transparent;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn-primary {
+        background: linear-gradient(120deg, #7cd6ff, #b8f3ff);
+        color: #071018;
+        box-shadow: 0 16px 30px rgba(124, 214, 255, 0.3);
+      }
+
+      .btn-secondary {
+        border-color: rgba(255, 255, 255, 0.2);
+        color: var(--text);
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 36px rgba(124, 214, 255, 0.25);
+      }
+
+      .hero-card {
+        padding: 30px;
+        border-radius: 28px;
+        background: linear-gradient(140deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.05));
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 18px;
+      }
+
+      .hero-metrics {
+        display: grid;
+        gap: 16px;
+      }
+
+      .metric {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 18px;
+        border-radius: 18px;
+        background: rgba(8, 10, 20, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 0.95rem;
+      }
+
+      .metric span {
+        color: var(--accent-strong);
+        font-weight: 600;
+      }
+
+      .section {
+        padding: 110px 0;
+      }
+
+      .section-title {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto 56px;
+      }
+
+      .section-title h2 {
+        font-size: clamp(2.4rem, 5vw, 4rem);
+        font-weight: 600;
+        margin-bottom: 18px;
+      }
+
+      .section-title p {
+        color: var(--text-soft);
+        font-size: 1.1rem;
+      }
+
+      .cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 24px;
+      }
+
+      .card {
+        padding: 28px;
+        border-radius: 24px;
+        background: var(--surface);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .card h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+      }
+
+      .card p {
+        color: var(--text-soft);
+        font-size: 0.98rem;
+      }
+
+      .product {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px;
+        align-items: center;
+      }
+
+      .product img {
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 14px;
+        border-radius: 999px;
+        background: rgba(124, 214, 255, 0.2);
+        color: var(--accent);
+        font-size: 0.8rem;
+        margin-bottom: 14px;
+      }
+
+      .product h3 {
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        margin-bottom: 12px;
+      }
+
+      .product p {
+        color: var(--text-soft);
+        font-size: 1.05rem;
+      }
+
+      .product.inverse .product-media {
+        order: -1;
+      }
+
+      .testimonials {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 22px;
+      }
+
+      .quote {
+        padding: 26px;
+        border-radius: 22px;
+        background: linear-gradient(150deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.04));
+        border: 1px solid rgba(255, 255, 255, 0.12);
+      }
+
+      .quote p {
+        color: var(--text-soft);
+        margin-bottom: 16px;
+        font-size: 0.98rem;
+      }
+
+      .quote span {
+        font-weight: 600;
+        color: var(--accent-warm);
+      }
+
+      .cta {
+        text-align: center;
+        padding: 90px 0;
+        background: linear-gradient(135deg, rgba(124, 214, 255, 0.18), rgba(255, 189, 176, 0.12));
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      footer {
+        padding: 48px 0 64px;
+        text-align: center;
+        color: var(--text-soft);
+        font-size: 0.85rem;
+      }
+
+      @media (max-width: 720px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero {
+          padding: 100px 0 90px;
+        }
+
+        .section {
+          padding: 80px 0;
+        }
+
+        .hero-card {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <img src="logo-tomos-small.svg" alt="Tomos" />
+        <nav class="nav-links">
+          <a href="#capabilities">Capabilities</a>
+          <a href="#products">Products</a>
+          <a href="#stories">Stories</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">TOMOS — Human-first AI</p>
+            <h1>Design AI that feels like a teammate, not a tool.</h1>
+            <p>
+              Tomos builds emotionally intelligent AI products that calm the chaos, spark
+              clarity, and help your team move with confidence.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#products">Explore products</a>
+              <a class="btn btn-secondary" href="#stories">See customer stories</a>
+            </div>
+          </div>
+          <div class="hero-card">
+            <h3>Momentum Snapshot</h3>
+            <div class="hero-metrics">
+              <div class="metric">Hours saved per week <span>18+</span></div>
+              <div class="metric">Faster reimbursements <span>3.4×</span></div>
+              <div class="metric">Support happiness <span>96%</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="capabilities" class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>AI that understands the moment, not just the data.</h2>
+            <p>
+              Our platform blends language intelligence with emotional context so every
+              interaction feels personal, thoughtful, and fast.
+            </p>
+          </div>
+          <div class="cards">
+            <div class="card">
+              <h3>Empathetic workflows</h3>
+              <p>Guide your team with AI that reduces stress and removes friction.</p>
+            </div>
+            <div class="card">
+              <h3>Instant clarity</h3>
+              <p>Summaries, insights, and next steps delivered before the meeting ends.</p>
+            </div>
+            <div class="card">
+              <h3>Predictive care</h3>
+              <p>Spot friction points early and respond with confidence and warmth.</p>
+            </div>
+            <div class="card">
+              <h3>Secure by design</h3>
+              <p>Enterprise-grade security with consent-first data handling.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="products" class="section">
+        <div class="container product">
+          <div class="product-content">
+            <div class="tag">Product 01</div>
+            <h3>Tomos Expenses</h3>
+            <p>
+              Turn receipts into reassurance. Expenses are captured, understood, and
+              resolved without the back-and-forth.
+            </p>
+          </div>
+          <div class="product-media">
+            <img src="t1.png" alt="Tomos Expenses interface" />
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="container product inverse">
+          <div class="product-content">
+            <div class="tag">Product 02</div>
+            <h3>Tomos Bot</h3>
+            <p>
+              Give every customer the feeling of being heard. Tomos Bot brings instant,
+              human-sounding answers to every corner of your website.
+            </p>
+          </div>
+          <div class="product-media">
+            <img src="t4.png" alt="Tomos Bot experience" />
+          </div>
+        </div>
+      </section>
+
+      <section id="stories" class="section">
+        <div class="container">
+          <div class="section-title">
+            <h2>People feel the difference.</h2>
+            <p>Emotional AI that earns trust, builds momentum, and turns customers into fans.</p>
+          </div>
+          <div class="testimonials">
+            <div class="quote">
+              <p>
+                “Tomos changed the temperature of our support inbox. The calm is real.”
+              </p>
+              <span>Lucía · Customer Experience</span>
+            </div>
+            <div class="quote">
+              <p>
+                “Our team finally trusts automation because it feels thoughtful, not
+                robotic.”
+              </p>
+              <span>Mateo · Operations</span>
+            </div>
+            <div class="quote">
+              <p>“It’s like adding a teammate that never misses the human details.”</p>
+              <span>Camila · Finance Lead</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="container">
+          <h2>Ready to make AI feel human?</h2>
+          <p class="section-title" style="margin: 20px auto 32px; max-width: 520px">
+            Let’s craft an experience your customers will remember and your team will
+            love.
+          </p>
+          <div class="hero-actions" style="justify-content: center">
+            <a class="btn btn-primary" href="#">Book a demo</a>
+            <a class="btn btn-secondary" href="#">Start with a pilot</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <img src="logo-tomos.webp" alt="Tomos" style="height: 28px; margin: 0 auto 12px" />
+        <div>© 2024 TOMOS. Crafted with empathy and intelligence.</div>
+      </div>
+    </footer>
+  </body>
+</html>
