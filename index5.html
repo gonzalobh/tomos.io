@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TOMOS — AI tools for modern teams</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c0d10;
+      --panel: #11131a;
+      --line: #1a1d27;
+      --text: #f4f6fb;
+      --muted: #b2b7c5;
+      --muted-2: #8b90a0;
+      --accent: #e6e9f2;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 18px;
+      --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 8px 0 48px;
+      position: sticky;
+      top: 0;
+      background: linear-gradient(180deg, rgba(12, 13, 16, 0.98), rgba(12, 13, 16, 0.8) 60%, transparent);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted-2);
+    }
+
+    .logo img {
+      width: 28px;
+      height: 28px;
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    nav a {
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+
+    nav a:hover {
+      opacity: 0.6;
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 24px;
+      padding: 48px 0 72px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 4vw, 3.4rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--muted-2);
+      margin-bottom: 24px;
+    }
+
+    .products {
+      display: grid;
+      gap: 36px;
+    }
+
+    .product-card {
+      display: grid;
+      gap: 24px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), opacity 0.5s var(--ease);
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: #2a2f3d;
+    }
+
+    .product-text h3 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .product-text p {
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .product-image {
+      border-radius: 14px;
+      border: 1px solid #171a24;
+      overflow: hidden;
+      background: #0f1118;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: auto;
+    }
+
+    .benefits {
+      display: grid;
+      gap: 18px;
+      padding: 72px 0;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .benefits div {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .closing {
+      padding: 40px 0 72px;
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      color: var(--muted-2);
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    footer img {
+      width: 22px;
+      height: 22px;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(12px);
+      animation: fadeUp 0.6s var(--ease) forwards;
+    }
+
+    .fade-delay-1 { animation-delay: 0.05s; }
+    .fade-delay-2 { animation-delay: 0.12s; }
+    .fade-delay-3 { animation-delay: 0.18s; }
+    .fade-delay-4 { animation-delay: 0.24s; }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (min-width: 900px) {
+      .products {
+        gap: 48px;
+      }
+
+      .product-card {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+        align-items: center;
+      }
+
+      .product-card:nth-child(even) {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      }
+
+      .product-card:nth-child(even) .product-text {
+        order: 2;
+      }
+
+      .product-card:nth-child(even) .product-image {
+        order: 1;
+      }
+    }
+
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="logo">
+        <img src="logo-tomos-small.svg" alt="TOMOS logo" />
+        TOMOS
+      </div>
+      <nav>
+        <a href="#products">Products</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="fade-in fade-delay-1">
+        <h1>AI tools for modern teams.</h1>
+      </div>
+      <p class="fade-in fade-delay-2">Fast. Focused. Intelligent.</p>
+    </section>
+
+    <section id="products">
+      <div class="section-title fade-in fade-delay-2">Products</div>
+      <div class="products">
+        <article class="product-card fade-in fade-delay-2">
+          <div class="product-text">
+            <h3>Tomos Expenses</h3>
+            <p>Automatic expense tracking with AI.</p>
+          </div>
+          <div class="product-image">
+            <img src="t1.png" alt="Tomos Expenses interface" />
+          </div>
+        </article>
+
+        <article class="product-card fade-in fade-delay-3">
+          <div class="product-text">
+            <h3>Tomos Bot</h3>
+            <p>AI assistant for instant customer answers.</p>
+          </div>
+          <div class="product-image">
+            <img src="t4.png" alt="Tomos Bot interface" />
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="benefits" class="benefits">
+      <div class="fade-in fade-delay-2">Fast setup</div>
+      <div class="fade-in fade-delay-3">No complexity</div>
+      <div class="fade-in fade-delay-4">Built for scale</div>
+    </section>
+
+    <section class="closing" id="contact">
+      <p class="fade-in fade-delay-2">Designed to stay out of the way.</p>
+    </section>
+
+    <footer>
+      <div class="logo">
+        <img src="logo-tomos.webp" alt="TOMOS" />
+        TOMOS
+      </div>
+      <div>Precision-first AI infrastructure.</div>
+    </footer>
+  </div>
+</body>
+</html>
