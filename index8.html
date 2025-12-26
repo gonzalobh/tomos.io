@@ -12,9 +12,9 @@
         --text: #0b0b0d;
         --text-soft: #60606a;
         --line: rgba(15, 15, 18, 0.08);
-        --blob1-color: rgba(210, 210, 215, 0.38);
-        --blob2-color: rgba(190, 190, 198, 0.3);
-        --blob3-color: rgba(220, 220, 228, 0.32);
+        --blob1-color: rgba(190, 190, 198, 0.48);
+        --blob2-color: rgba(175, 175, 184, 0.42);
+        --blob3-color: rgba(200, 200, 210, 0.45);
       }
 
       * {
@@ -41,22 +41,22 @@
         pointer-events: none;
         background:
           radial-gradient(
-              420px 420px at var(--blob1-x, 20%) var(--blob1-y, 20%),
+              720px 720px at var(--blob1-x, 20%) var(--blob1-y, 20%),
               var(--blob1-color),
               rgba(245, 245, 247, 0)
             ),
           radial-gradient(
-              520px 520px at var(--blob2-x, 80%) var(--blob2-y, 30%),
+              780px 780px at var(--blob2-x, 80%) var(--blob2-y, 30%),
               var(--blob2-color),
               rgba(245, 245, 247, 0)
             ),
           radial-gradient(
-              460px 460px at var(--blob3-x, 50%) var(--blob3-y, 85%),
+              700px 700px at var(--blob3-x, 50%) var(--blob3-y, 85%),
               var(--blob3-color),
               rgba(245, 245, 247, 0)
             );
-        filter: blur(60px);
-        opacity: 0.75;
+        filter: blur(40px);
+        opacity: 0.85;
         transform: translateZ(0);
       }
 
@@ -397,25 +397,26 @@
     <script>
       const root = document.documentElement;
       const blobs = [
-        { x: 20, y: 20, tx: 20, ty: 20, shade: 92, tshade: 92, alpha: 0.38 },
-        { x: 80, y: 30, tx: 80, ty: 30, shade: 88, tshade: 88, alpha: 0.3 },
-        { x: 50, y: 85, tx: 50, ty: 85, shade: 95, tshade: 95, alpha: 0.32 },
+        { x: 20, y: 20, tx: 20, ty: 20, shade: 86, tshade: 86, alpha: 0.48 },
+        { x: 80, y: 30, tx: 80, ty: 30, shade: 83, tshade: 83, alpha: 0.42 },
+        { x: 50, y: 85, tx: 50, ty: 85, shade: 88, tshade: 88, alpha: 0.45 },
       ];
 
       const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
       const randomTarget = (blob) => {
-        blob.tx = clamp(blob.x + (Math.random() * 30 - 15), 5, 95);
-        blob.ty = clamp(blob.y + (Math.random() * 30 - 15), 5, 95);
+        blob.tx = clamp(blob.x + (Math.random() * 50 - 25), 5, 95);
+        blob.ty = clamp(blob.y + (Math.random() * 50 - 25), 5, 95);
       };
-      const randomShade = () => Math.round(86 + Math.random() * 12);
+      const randomShade = () => Math.round(82 + Math.random() * 10);
       const shadeToColor = (shade, alpha) =>
         `rgba(${shade * 2.55}, ${shade * 2.55}, ${shade * 2.55}, ${alpha})`;
 
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       blobs.forEach((blob) => randomTarget(blob));
 
       let lastTime = performance.now();
-      let nextTargetAt = lastTime + 9000;
-      let nextShadeAt = lastTime + 7000;
+      let nextTargetAt = lastTime + 12000;
+      let nextShadeAt = lastTime + 9000;
 
       const tick = (now) => {
         const delta = (now - lastTime) / 1000;
@@ -423,18 +424,18 @@
 
         if (now >= nextTargetAt) {
           blobs.forEach((blob) => randomTarget(blob));
-          nextTargetAt = now + 9000 + Math.random() * 6000;
+          nextTargetAt = now + 12000 + Math.random() * 9000;
         }
 
         if (now >= nextShadeAt) {
           blobs.forEach((blob) => {
             blob.tshade = randomShade();
           });
-          nextShadeAt = now + 6000 + Math.random() * 4000;
+          nextShadeAt = now + 9000 + Math.random() * 6000;
         }
 
-        const ease = 0.04 * delta;
-        const shadeEase = 0.02 * delta;
+        const ease = 0.03 * delta;
+        const shadeEase = 0.015 * delta;
         blobs.forEach((blob, index) => {
           blob.x += (blob.tx - blob.x) * ease;
           blob.y += (blob.ty - blob.y) * ease;
@@ -450,7 +451,9 @@
         requestAnimationFrame(tick);
       };
 
-      requestAnimationFrame(tick);
+      if (!prefersReducedMotion.matches) {
+        requestAnimationFrame(tick);
+      }
     </script>
   </body>
 </html>
