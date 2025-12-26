@@ -12,6 +12,9 @@
         --text: #0b0b0d;
         --text-soft: #60606a;
         --line: rgba(15, 15, 18, 0.08);
+        --blob1-color: rgba(210, 210, 215, 0.38);
+        --blob2-color: rgba(190, 190, 198, 0.3);
+        --blob3-color: rgba(220, 220, 228, 0.32);
       }
 
       * {
@@ -39,17 +42,17 @@
         background:
           radial-gradient(
               420px 420px at var(--blob1-x, 20%) var(--blob1-y, 20%),
-              rgba(200, 200, 205, 0.38),
+              var(--blob1-color),
               rgba(245, 245, 247, 0)
             ),
           radial-gradient(
               520px 520px at var(--blob2-x, 80%) var(--blob2-y, 30%),
-              rgba(180, 180, 188, 0.28),
+              var(--blob2-color),
               rgba(245, 245, 247, 0)
             ),
           radial-gradient(
               460px 460px at var(--blob3-x, 50%) var(--blob3-y, 85%),
-              rgba(210, 210, 218, 0.32),
+              var(--blob3-color),
               rgba(245, 245, 247, 0)
             );
         filter: blur(60px);
@@ -338,9 +341,9 @@
     <script>
       const root = document.documentElement;
       const blobs = [
-        { x: 20, y: 20, tx: 20, ty: 20 },
-        { x: 80, y: 30, tx: 80, ty: 30 },
-        { x: 50, y: 85, tx: 50, ty: 85 },
+        { x: 20, y: 20, tx: 20, ty: 20, shade: 92, tshade: 92, alpha: 0.38 },
+        { x: 80, y: 30, tx: 80, ty: 30, shade: 88, tshade: 88, alpha: 0.3 },
+        { x: 50, y: 85, tx: 50, ty: 85, shade: 95, tshade: 95, alpha: 0.32 },
       ];
 
       const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
@@ -348,11 +351,15 @@
         blob.tx = clamp(blob.x + (Math.random() * 30 - 15), 5, 95);
         blob.ty = clamp(blob.y + (Math.random() * 30 - 15), 5, 95);
       };
+      const randomShade = () => Math.round(86 + Math.random() * 12);
+      const shadeToColor = (shade, alpha) =>
+        `rgba(${shade * 2.55}, ${shade * 2.55}, ${shade * 2.55}, ${alpha})`;
 
       blobs.forEach((blob) => randomTarget(blob));
 
       let lastTime = performance.now();
       let nextTargetAt = lastTime + 9000;
+      let nextShadeAt = lastTime + 7000;
 
       const tick = (now) => {
         const delta = (now - lastTime) / 1000;
@@ -363,12 +370,25 @@
           nextTargetAt = now + 9000 + Math.random() * 6000;
         }
 
+        if (now >= nextShadeAt) {
+          blobs.forEach((blob) => {
+            blob.tshade = randomShade();
+          });
+          nextShadeAt = now + 6000 + Math.random() * 4000;
+        }
+
         const ease = 0.04 * delta;
+        const shadeEase = 0.02 * delta;
         blobs.forEach((blob, index) => {
           blob.x += (blob.tx - blob.x) * ease;
           blob.y += (blob.ty - blob.y) * ease;
+          blob.shade += (blob.tshade - blob.shade) * shadeEase;
           root.style.setProperty(`--blob${index + 1}-x`, `${blob.x}%`);
           root.style.setProperty(`--blob${index + 1}-y`, `${blob.y}%`);
+          root.style.setProperty(
+            `--blob${index + 1}-color`,
+            shadeToColor(blob.shade, blob.alpha)
+          );
         });
 
         requestAnimationFrame(tick);
