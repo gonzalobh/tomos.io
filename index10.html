@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TOMOS · Productos con personalidad</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f5f6f7;
+        --ink: #0a0a0c;
+        --muted: #5d6168;
+        --accent: #1b1d22;
+        --line: rgba(10, 10, 12, 0.08);
+        --panel: #f0f1f2;
+        --glow: rgba(17, 17, 24, 0.15);
+        --radius: 28px;
+        --shadow: 0 30px 60px rgba(15, 17, 20, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", "SF Pro Display", system-ui, -apple-system, sans-serif;
+        background: radial-gradient(circle at 10% 20%, #ffffff, transparent 55%),
+          radial-gradient(circle at 80% 10%, #e7eaee, transparent 45%),
+          radial-gradient(circle at 50% 90%, #dfe3e8, transparent 50%),
+          var(--bg);
+        color: var(--ink);
+        min-height: 100vh;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: -10% -20% 0;
+        background: radial-gradient(circle at 20% 20%, rgba(0, 0, 0, 0.08), transparent 35%),
+          radial-gradient(circle at 80% 30%, rgba(0, 0, 0, 0.06), transparent 45%),
+          radial-gradient(circle at 50% 90%, rgba(0, 0, 0, 0.07), transparent 35%);
+        pointer-events: none;
+        filter: blur(40px);
+        animation: drift 14s ease-in-out infinite alternate;
+        z-index: 0;
+      }
+
+      @keyframes drift {
+        0% {
+          transform: translate3d(0, 0, 0);
+        }
+        100% {
+          transform: translate3d(2%, -2%, 0);
+        }
+      }
+
+      header,
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        padding: 32px 0 10px;
+      }
+
+      .container {
+        width: min(1200px, 92vw);
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        color: var(--muted);
+      }
+
+      .logo img {
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+        filter: drop-shadow(0 16px 30px rgba(0, 0, 0, 0.15));
+      }
+
+      .signal {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: #ffffff;
+        border-radius: 999px;
+        padding: 6px 14px 6px 8px;
+        font-size: 0.78rem;
+        color: var(--muted);
+        border: 1px solid var(--line);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+      }
+
+      .signal span {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(130deg, #1f2127, #62666f);
+        display: inline-block;
+        animation: pulse 2.2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.9;
+        }
+        50% {
+          transform: scale(1.25);
+          opacity: 0.6;
+        }
+      }
+
+      .hero {
+        padding: 60px 0 90px;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.8rem, 6vw, 4.8rem);
+        font-weight: 600;
+        letter-spacing: -0.03em;
+      }
+
+      .hero p {
+        margin-top: 18px;
+        font-size: clamp(1.05rem, 2vw, 1.35rem);
+        color: var(--muted);
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .products {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 28px;
+        padding-bottom: 110px;
+      }
+
+      .product {
+        background: var(--panel);
+        border-radius: var(--radius);
+        padding: 32px;
+        border: 1px solid rgba(12, 12, 16, 0.05);
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+      }
+
+      .product::before {
+        content: "";
+        position: absolute;
+        inset: -50% -20% auto;
+        height: 260px;
+        background: radial-gradient(circle, rgba(0, 0, 0, 0.08), transparent 70%);
+        opacity: 0.6;
+        transform: translateY(-20px);
+        transition: opacity 0.4s ease;
+      }
+
+      .product::after {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: calc(var(--radius) - 12px);
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        mix-blend-mode: multiply;
+        pointer-events: none;
+      }
+
+      .product:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 40px 80px rgba(18, 18, 26, 0.18);
+      }
+
+      .product:hover::before {
+        opacity: 0.9;
+      }
+
+      .product-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        background: #ffffff;
+        color: var(--muted);
+        border: 1px solid var(--line);
+      }
+
+      .status {
+        font-size: 0.75rem;
+        color: var(--muted);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .status::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: linear-gradient(180deg, #1b1d22, #6b6f77);
+        box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08);
+      }
+
+      .product h2 {
+        font-size: clamp(1.7rem, 3vw, 2.4rem);
+        margin-top: 22px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .product p {
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 1rem;
+        max-width: 420px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .product-media {
+        margin-top: 30px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .media-frame {
+        background: #ffffff;
+        border-radius: 22px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 18px;
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      .media-frame img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 16px;
+        filter: grayscale(100%) contrast(1.05);
+        transform: scale(1);
+        transition: transform 0.6s ease, filter 0.6s ease;
+      }
+
+      .product:hover .media-frame img {
+        transform: scale(1.04);
+        filter: grayscale(0) contrast(1.1);
+      }
+
+      .cta {
+        margin-top: 28px;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        background: #0f1014;
+        color: #f7f7f7;
+        font-size: 0.9rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .cta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), transparent 40%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      .cta:hover {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 16px 30px var(--glow);
+      }
+
+      .cta:hover::after {
+        opacity: 1;
+      }
+
+      .orb {
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.75), rgba(0, 0, 0, 0.05));
+        filter: blur(8px);
+        top: -40px;
+        right: -30px;
+        opacity: 0.6;
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .product.secondary .orb {
+        top: auto;
+        bottom: -50px;
+        left: -20px;
+        animation-delay: 1.6s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(18px);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .products {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .product {
+          padding: 26px;
+        }
+
+        .hero {
+          padding-top: 40px;
+        }
+
+        .media-frame img {
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container topbar">
+        <div class="logo">
+          <img src="logo-tomos.webp" alt="Logo de Tomos" />
+          TOMOS.IO
+        </div>
+        <div class="signal">
+          <span></span>
+          Ecosistema vivo
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero container">
+        <h1>Dos productos. Una visión clara.</h1>
+        <p>
+          TOMOS.IO es un estudio digital que convierte la complejidad en claridad. Con
+          Expenses y Bot, automatizamos lo esencial y amplificamos tu impacto.
+        </p>
+      </section>
+
+      <section class="container products">
+        <article class="product">
+          <div class="orb" aria-hidden="true"></div>
+          <div class="product-header">
+            <div class="chip">Expenses</div>
+            <div class="status">Finanzas claras</div>
+          </div>
+          <h2>Expenses</h2>
+          <p>
+            Controla cada gasto con una vista elegante y simple. Alertas inteligentes,
+            reportes instantáneos y trazabilidad total para equipos exigentes.
+          </p>
+          <div class="product-media">
+            <div class="media-frame">
+              <img src="t1.png" alt="Vista de producto Expenses" />
+            </div>
+          </div>
+          <a class="cta" href="#">Ver producto</a>
+        </article>
+
+        <article class="product secondary">
+          <div class="orb" aria-hidden="true"></div>
+          <div class="product-header">
+            <div class="chip">Bot</div>
+            <div class="status">Automatización humana</div>
+          </div>
+          <h2>Bot</h2>
+          <p>
+            Orquesta procesos y conversaciones en segundos. Un asistente inteligente que
+            entiende tu negocio y actúa con precisión.
+          </p>
+          <div class="product-media">
+            <div class="media-frame">
+              <img src="t4.png" alt="Vista de producto Bot" />
+            </div>
+          </div>
+          <a class="cta" href="#">Explorar bot</a>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
