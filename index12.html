@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TOMOS — Products in motion</title>
+    <title>TOMOS — Expenses & Bot</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        color-scheme: light;
-        --bg: #f7f7f9;
-        --ink: #1b1b1f;
-        --muted: rgba(27, 27, 31, 0.58);
-        --accent: #a6c8ff;
-        --accent-2: #d6b8ff;
-        --accent-3: #bfe8e2;
-        --glass: rgba(255, 255, 255, 0.7);
-        --line: rgba(20, 20, 30, 0.08);
+        color-scheme: dark;
+        --bg: #0a0b10;
+        --ink: #f5f6ff;
+        --muted: rgba(245, 246, 255, 0.62);
+        --line: rgba(245, 246, 255, 0.12);
+        --pulse: rgba(255, 255, 255, 0.08);
+        --accent: #52f6b0;
+        --accent-2: #7c6cff;
+        --accent-3: #ff6ad5;
       }
 
       * {
@@ -30,12 +30,11 @@
       }
 
       body {
-        font-family: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
-        background: radial-gradient(120% 120% at 10% 10%, #ffffff 0%, #f2f2f6 55%, #e9edf4 100%);
+        font-family: "Space Grotesk", system-ui, sans-serif;
+        background: radial-gradient(120% 120% at 20% 10%, #182134 0%, #0a0b10 52%, #050509 100%);
         color: var(--ink);
         min-height: 100vh;
         overflow-x: hidden;
-        animation: backgroundShift 18s ease-in-out infinite;
       }
 
       img {
@@ -52,114 +51,65 @@
         position: fixed;
         inset: 0;
         pointer-events: none;
-        opacity: 0.08;
-        mix-blend-mode: multiply;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E");
-        z-index: 1;
-      }
-
-      .orb {
-        position: absolute;
-        width: 380px;
-        height: 380px;
-        border-radius: 50%;
-        filter: blur(70px);
-        opacity: 0.4;
-        animation: drift 18s ease-in-out infinite;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+        opacity: 0.06;
+        mix-blend-mode: screen;
         z-index: 0;
       }
 
-      .orb.one {
-        background: radial-gradient(circle, rgba(166, 200, 255, 0.6), transparent 70%);
-        top: -120px;
-        left: -80px;
-      }
-
-      .orb.two {
-        background: radial-gradient(circle, rgba(214, 184, 255, 0.6), transparent 70%);
-        top: 30%;
-        right: -120px;
-        animation-delay: -6s;
-      }
-
-      .orb.three {
-        background: radial-gradient(circle, rgba(191, 232, 226, 0.7), transparent 70%);
-        bottom: -160px;
-        left: 20%;
-        animation-delay: -12s;
+      .halo {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at 20% 20%, rgba(82, 246, 176, 0.18), transparent 45%),
+          radial-gradient(circle at 90% 10%, rgba(124, 108, 255, 0.28), transparent 42%),
+          radial-gradient(circle at 60% 80%, rgba(255, 106, 213, 0.2), transparent 45%);
+        filter: blur(20px);
+        z-index: 0;
       }
 
       .container {
-        width: min(1120px, 92vw);
+        width: min(1180px, 92vw);
         margin: 0 auto;
         position: relative;
         z-index: 2;
       }
 
       header {
-        padding: 28px 0 12px;
         position: sticky;
         top: 0;
+        z-index: 4;
         backdrop-filter: blur(16px);
-        background: rgba(247, 247, 249, 0.8);
+        background: rgba(7, 8, 12, 0.7);
         border-bottom: 1px solid transparent;
-        z-index: 3;
-        transition: box-shadow 0.4s ease;
-      }
-
-      header:hover {
-        box-shadow: 0 10px 30px rgba(25, 25, 40, 0.08);
       }
 
       .nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 24px;
+        padding: 28px 0 18px;
       }
 
       .nav img {
-        height: 26px;
-        filter: grayscale(1);
-        opacity: 0.8;
-        animation: logoFloat 6s ease-in-out infinite;
+        height: 30px;
+        filter: brightness(1.2);
       }
 
-      .nav-links {
-        display: flex;
-        gap: 28px;
-        font-size: 0.9rem;
-        letter-spacing: 0.3em;
+      .nav a {
+        font-size: 0.72rem;
+        letter-spacing: 0.45em;
         text-transform: uppercase;
         color: var(--muted);
-      }
-
-      .nav-links a {
-        position: relative;
         transition: color 0.3s ease;
       }
 
-      .nav-links a::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        bottom: -8px;
-        width: 0;
-        height: 2px;
-        background: linear-gradient(90deg, var(--accent), var(--accent-2));
-        transition: width 0.3s ease;
-      }
-
-      .nav-links a:hover {
+      .nav a:hover {
         color: var(--ink);
       }
 
-      .nav-links a:hover::after {
-        width: 100%;
-      }
-
       .hero {
-        padding: 140px 0 120px;
+        padding: 110px 0 40px;
       }
 
       .hero-grid {
@@ -169,387 +119,199 @@
         align-items: center;
       }
 
-      .eyebrow {
+      .kicker {
+        font-size: 0.8rem;
+        letter-spacing: 0.6em;
         text-transform: uppercase;
-        letter-spacing: 0.5em;
-        font-size: 0.7rem;
         color: var(--muted);
         margin-bottom: 18px;
       }
 
-      .hero h1 {
-        font-family: "Space Grotesk", "Manrope", sans-serif;
-        font-size: clamp(3.4rem, 8vw, 6.5rem);
-        line-height: 0.95;
-        letter-spacing: -0.03em;
-        margin-bottom: 24px;
-        position: relative;
+      h1 {
+        font-family: "Syne", "Space Grotesk", sans-serif;
+        font-size: clamp(3.6rem, 8vw, 6.4rem);
+        line-height: 0.92;
+        letter-spacing: -0.02em;
       }
 
-      .hero h1 span {
-        color: transparent;
-        background: linear-gradient(120deg, var(--accent), var(--accent-2), var(--accent-3));
-        -webkit-background-clip: text;
-        background-clip: text;
-        text-shadow: 0 10px 30px rgba(166, 200, 255, 0.45);
-        animation: shimmer 6s ease-in-out infinite;
-      }
-
-      .hero p {
+      .hero-copy {
         font-size: 1.1rem;
         color: var(--muted);
-        max-width: 480px;
+        margin-top: 22px;
+        max-width: 520px;
       }
 
-      .hero-panel {
-        background: var(--glass);
+      .hero-cta {
+        margin-top: 36px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .pill {
+        border-radius: 999px;
+        padding: 12px 20px;
         border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 32px;
-        backdrop-filter: blur(18px);
-        box-shadow: 0 40px 80px rgba(90, 94, 120, 0.15);
+        background: rgba(255, 255, 255, 0.04);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+      }
+
+      .wave {
         position: relative;
+        padding: 28px 32px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+        box-shadow: 0 40px 90px rgba(0, 0, 0, 0.4);
         overflow: hidden;
-        animation: panelFloat 10s ease-in-out infinite;
       }
 
-      .hero-panel::before {
+      .wave::before {
         content: "";
         position: absolute;
-        inset: -40% 20% auto auto;
-        width: 180px;
-        height: 180px;
-        background: radial-gradient(circle, rgba(166, 200, 255, 0.5), transparent 70%);
-        filter: blur(24px);
-        animation: pulse 4s ease-in-out infinite;
+        inset: -40% 30% auto auto;
+        width: 220px;
+        height: 220px;
+        background: radial-gradient(circle, rgba(124, 108, 255, 0.5), transparent 70%);
+        filter: blur(16px);
       }
 
-      .hero-panel::after {
-        content: "";
-        position: absolute;
-        inset: 20% auto auto -20%;
-        width: 160px;
-        height: 160px;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(214, 184, 255, 0.4), transparent 70%);
-        filter: blur(18px);
-        animation: drift 12s ease-in-out infinite;
+      .wave h2 {
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        margin-bottom: 18px;
       }
 
-      .hero-panel h2 {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-      }
-
-      .hero-panel ul {
+      .wave ul {
         list-style: none;
         display: grid;
         gap: 14px;
         color: var(--muted);
       }
 
-      .hero-panel li {
+      .wave li {
         display: flex;
         gap: 12px;
         align-items: center;
-        font-size: 0.95rem;
       }
 
       .dot {
-        width: 8px;
-        height: 8px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background: linear-gradient(120deg, var(--accent), var(--accent-2));
       }
 
-      .section {
-        padding: 120px 0;
+      .stage {
+        padding: 80px 0 120px;
       }
 
-      .section-title {
-        font-size: clamp(2rem, 4.5vw, 3.8rem);
-        font-family: "Space Grotesk", sans-serif;
-        margin-bottom: 24px;
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px;
       }
 
       .product {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 60px;
-        align-items: center;
-      }
-
-      .product-card {
+        position: relative;
         border-radius: 28px;
         padding: 34px;
-        background: linear-gradient(130deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
-        border: 1px solid rgba(20, 20, 30, 0.08);
-        position: relative;
+        border: 1px solid var(--line);
+        background: linear-gradient(140deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.01));
         overflow: hidden;
-        animation: cardRise 8s ease-in-out infinite;
+        min-height: 520px;
+        display: grid;
+        gap: 24px;
+        align-content: space-between;
       }
 
-      .product-card::after {
+      .product::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: radial-gradient(circle at top right, rgba(214, 184, 255, 0.35), transparent 55%);
-        opacity: 0;
-        transition: opacity 0.6s ease;
+        background: radial-gradient(circle at top left, rgba(82, 246, 176, 0.18), transparent 55%);
+        opacity: 0.7;
+        pointer-events: none;
       }
 
-      .product-card:hover::after {
-        opacity: 1;
+      .product.alt::after {
+        background: radial-gradient(circle at top right, rgba(255, 106, 213, 0.2), transparent 55%);
       }
 
-      .product-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.5), transparent);
-        transform: translateX(-120%);
-        animation: sweepGlow 6s ease-in-out infinite;
-        opacity: 0.6;
+      .product h3 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+        margin-bottom: 12px;
       }
 
-      .product-label {
-        text-transform: uppercase;
-        letter-spacing: 0.4em;
-        font-size: 0.7rem;
-        color: var(--muted);
-        margin-bottom: 16px;
-      }
-
-      .product-card h3 {
-        font-size: clamp(2rem, 3.8vw, 3rem);
-        margin-bottom: 14px;
-      }
-
-      .product-card p {
+      .product p {
         color: var(--muted);
         font-size: 1.02rem;
       }
 
       .product-tag {
-        margin-top: 24px;
         display: inline-flex;
+        gap: 10px;
         align-items: center;
-        gap: 12px;
-        padding: 10px 18px;
-        border-radius: 999px;
-        border: 1px solid rgba(20, 20, 30, 0.12);
-        font-size: 0.9rem;
-        color: var(--ink);
-        background: rgba(255, 255, 255, 0.7);
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        font-size: 0.7rem;
+        color: var(--muted);
       }
 
       .product-media {
         position: relative;
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        overflow: hidden;
+        background: rgba(10, 11, 16, 0.6);
+        box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.4);
       }
 
       .product-media img {
-        border-radius: 24px;
-        border: 1px solid rgba(20, 20, 30, 0.12);
-        box-shadow: 0 25px 60px rgba(60, 70, 90, 0.2);
-        transform: translateY(0);
-        animation: float 7s ease-in-out infinite;
+        width: 100%;
+        height: auto;
+        display: block;
       }
 
-      .product-media .ghost {
+      .badge {
         position: absolute;
-        top: 10%;
-        left: 8%;
-        width: 60%;
-        border-radius: 24px;
-        opacity: 0.35;
-        filter: blur(2px);
-        transform: translate(20px, 10px) scale(0.98);
-        animation: glide 6s ease-in-out infinite;
+        top: 24px;
+        right: 24px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        background: rgba(7, 8, 12, 0.8);
+        border: 1px solid var(--line);
+        text-transform: uppercase;
+        letter-spacing: 0.3em;
+        font-size: 0.68rem;
       }
 
-      .product-media .flare {
-        position: absolute;
-        bottom: -10%;
-        right: -5%;
-        width: 45%;
-        height: 45%;
-        border-radius: 50%;
-        background: radial-gradient(circle, rgba(166, 200, 255, 0.6), transparent 70%);
-        filter: blur(18px);
-        animation: pulse 4s ease-in-out infinite;
-      }
-
-      .inverse {
-        grid-auto-flow: dense;
-      }
-
-      .inverse .product-card {
-        order: 2;
-        animation-delay: -2s;
-      }
-
-      .closing {
-        padding: 130px 0 150px;
+      .signal {
+        padding: 120px 0 140px;
         text-align: center;
       }
 
-      .closing h2 {
-        font-size: clamp(2.4rem, 5vw, 4.2rem);
-        font-family: "Space Grotesk", sans-serif;
+      .signal h2 {
+        font-family: "Syne", sans-serif;
+        font-size: clamp(2.4rem, 6vw, 4.4rem);
         margin-bottom: 20px;
-        animation: shimmer 8s ease-in-out infinite;
       }
 
-      .closing p {
+      .signal p {
         color: var(--muted);
+        max-width: 640px;
+        margin: 0 auto;
       }
 
       footer {
-        padding: 50px 0 80px;
+        padding: 40px 0 70px;
         text-align: center;
         color: var(--muted);
         font-size: 0.85rem;
-      }
-
-      .scroll-hint {
-        font-size: 0.75rem;
-        letter-spacing: 0.4em;
-        text-transform: uppercase;
-        color: var(--muted);
-        display: inline-flex;
-        gap: 12px;
-        align-items: center;
-        margin-top: 30px;
-      }
-
-      .scroll-line {
-        width: 40px;
-        height: 2px;
-        background: linear-gradient(90deg, var(--accent), transparent);
-        animation: sweep 2.8s ease-in-out infinite;
-      }
-
-      @keyframes drift {
-        0%,
-        100% {
-          transform: translate(0, 0) scale(1);
-        }
-        50% {
-          transform: translate(40px, -30px) scale(1.12);
-        }
-      }
-
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-16px);
-        }
-      }
-
-      @keyframes glide {
-        0%,
-        100% {
-          transform: translate(20px, 10px) scale(0.98);
-        }
-        50% {
-          transform: translate(-10px, -12px) scale(1);
-        }
-      }
-
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-          opacity: 0.5;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 0.9;
-        }
-      }
-
-      @keyframes sweep {
-        0%,
-        100% {
-          transform: translateX(0);
-          opacity: 0.4;
-        }
-        50% {
-          transform: translateX(20px);
-          opacity: 1;
-        }
-      }
-
-      @keyframes shimmer {
-        0%,
-        100% {
-          filter: drop-shadow(0 0 0 rgba(166, 200, 255, 0.2));
-          letter-spacing: -0.02em;
-        }
-        50% {
-          filter: drop-shadow(0 10px 20px rgba(166, 200, 255, 0.35));
-          letter-spacing: 0.01em;
-        }
-      }
-
-      @keyframes sweepGlow {
-        0% {
-          transform: translateX(-120%);
-          opacity: 0;
-        }
-        35% {
-          opacity: 0.45;
-        }
-        60% {
-          opacity: 0.2;
-        }
-        100% {
-          transform: translateX(120%);
-          opacity: 0;
-        }
-      }
-
-      @keyframes backgroundShift {
-        0%,
-        100% {
-          background-position: 0% 0%;
-        }
-        50% {
-          background-position: 80% 30%;
-        }
-      }
-
-      @keyframes logoFloat {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-6px);
-        }
-      }
-
-      @keyframes panelFloat {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(10px);
-        }
-      }
-
-      @keyframes cardRise {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
       }
 
       @media (max-width: 900px) {
@@ -557,44 +319,30 @@
           grid-template-columns: 1fr;
         }
 
-        .nav-links {
-          display: none;
+        header {
+          position: static;
         }
       }
 
       @media (max-width: 640px) {
-        header {
-          position: static;
-        }
-
         .hero {
-          padding: 110px 0 90px;
-        }
-
-        .section {
-          padding: 90px 0;
+          padding-top: 90px;
         }
 
         .product {
-          gap: 36px;
+          min-height: auto;
         }
       }
     </style>
   </head>
   <body>
     <div class="noise"></div>
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-    <div class="orb three"></div>
+    <div class="halo"></div>
 
     <header>
       <div class="container nav">
         <img src="logo-tomos-small.svg" alt="Tomos" />
-        <nav class="nav-links">
-          <a href="#expenses">Expenses</a>
-          <a href="#bot">Bot</a>
-          <a href="#signal">Signal</a>
-        </nav>
+        <a href="#productos">Productos</a>
       </div>
     </header>
 
@@ -602,75 +350,77 @@
       <section class="hero">
         <div class="container hero-grid">
           <div>
-            <p class="eyebrow">TOMOS FUTURE STUDIO</p>
+            <div class="kicker">TOMOS PRODUCT LAB</div>
             <h1>
-              Diseño que<br />
-              <span>respira</span>,<br />
-              productos que<br />
-              <span>se mueven</span>.
+              Dos productos.<br />
+              Una presencia<br />
+              imparable.
             </h1>
-            <p>
-              Dos experiencias AI que se sienten vivas. Tipografía cinética, capas con
-              profundidad y movimiento continuo para enamorar a tus usuarios.
+            <p class="hero-copy">
+              Expenses y Bot son el corazón de TOMOS. Un diseño rupturista que los
+              pone en primer plano: ritmo, contraste y energía para que tu oferta
+              domine la escena.
             </p>
-            <div class="scroll-hint">
-              Scroll
-              <span class="scroll-line"></span>
+            <div class="hero-cta">
+              <span class="pill">Expenses</span>
+              <span class="pill">Bot</span>
+              <span class="pill">AI-native</span>
             </div>
           </div>
-          <div class="hero-panel">
-            <h2>Motion cues in light mode</h2>
+          <div class="wave">
+            <h2>High-impact focus</h2>
             <ul>
-              <li><span class="dot"></span>Sombras suaves y capas translúcidas</li>
-              <li><span class="dot"></span>Ritmo de brillo sutil en superficies</li>
-              <li><span class="dot"></span>Flujo continuo de UI sin contraste duro</li>
+              <li><span class="dot"></span>Jerarquía absoluta en los productos</li>
+              <li><span class="dot"></span>Capas oscuras + acentos neón</li>
+              <li><span class="dot"></span>Composición editorial, sin distracciones</li>
             </ul>
           </div>
         </div>
       </section>
 
-      <section id="expenses" class="section">
-        <div class="container product">
-          <div class="product-card">
-            <div class="product-label">Product 01</div>
-            <h3>Tomos Expenses</h3>
-            <p>
-              Gestiona gastos en piloto automático. AI que extrae, categoriza y
-              transforma recibos en decisiones visuales.
-            </p>
-            <div class="product-tag">Sync · Insights · Control total</div>
-          </div>
-          <div class="product-media">
-            <img src="t1.png" alt="Tomos Expenses interface" />
-            <img class="ghost" src="t1.png" alt="Tomos Expenses glow layer" />
-            <span class="flare"></span>
-          </div>
+      <section id="productos" class="stage">
+        <div class="container product-grid">
+          <article class="product" id="expenses">
+            <div>
+              <div class="product-tag">Producto 01 · Expenses</div>
+              <h3>Control total de gastos en tiempo real.</h3>
+              <p>
+                Expenses transforma recibos en insights accionables. Automatiza
+                conciliación, detecta patrones y entrega visibilidad inmediata para
+                tomar decisiones con ventaja.
+              </p>
+            </div>
+            <div class="product-media">
+              <span class="badge">Expenses</span>
+              <img src="t1.png" alt="Tomos Expenses" />
+            </div>
+          </article>
+
+          <article class="product alt" id="bot">
+            <div>
+              <div class="product-tag">Producto 02 · Bot</div>
+              <h3>Un bot que conversa, decide y acciona.</h3>
+              <p>
+                Bot aprende tu negocio, responde con voz propia y opera 24/7. El
+                soporte se vuelve estratégico, con respuestas inteligentes y
+                contexto en cada interacción.
+              </p>
+            </div>
+            <div class="product-media">
+              <span class="badge">Bot</span>
+              <img src="t4.png" alt="Tomos Bot" />
+            </div>
+          </article>
         </div>
       </section>
 
-      <section id="bot" class="section">
-        <div class="container product inverse">
-          <div class="product-card">
-            <div class="product-label">Product 02</div>
-            <h3>Tomos Bot</h3>
-            <p>
-              Un agente conversacional que responde como tu mejor equipo. Entrenado con
-              tu conocimiento, en tiempo real y con voz propia.
-            </p>
-            <div class="product-tag">24/7 · Conversational · Humanized AI</div>
-          </div>
-          <div class="product-media">
-            <img src="t4.png" alt="Tomos Bot experience" />
-            <img class="ghost" src="t4.png" alt="Tomos Bot glow layer" />
-            <span class="flare"></span>
-          </div>
-        </div>
-      </section>
-
-      <section id="signal" class="closing">
+      <section class="signal">
         <div class="container">
-          <h2>Ritmo visual, foco comercial.</h2>
-          <p>Impacto inmediato para productos que quieren liderar el mañana.</p>
+          <h2>Expenses y Bot: la dupla que domina tu próxima etapa.</h2>
+          <p>
+            Un manifiesto visual para tus dos productos clave. Sin ruido, sin
+            relleno: solo el foco absoluto en lo que más importa.
+          </p>
         </div>
       </section>
     </main>
@@ -678,7 +428,7 @@
     <footer>
       <div class="container">
         <img src="logo-tomos.webp" alt="Tomos" style="height: 28px; margin: 0 auto 12px" />
-        <div>© 2024 TOMOS. Crafted by visual storytelling.</div>
+        <div>© 2024 TOMOS. All focus on Expenses & Bot.</div>
       </div>
     </footer>
   </body>
