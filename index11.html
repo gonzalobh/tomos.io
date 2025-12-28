@@ -14,10 +14,10 @@
       :root {
         color-scheme: light;
         --bg: #ffffff;
-        --text: #0b0b0d;
-        --text-soft: #5f5f67;
+        --text: #0e0e11;
+        --text-soft: #6a6a73;
         --line: rgba(12, 12, 16, 0.08);
-        --accent: #1b1b1f;
+        --accent: #141418;
       }
 
       * {
@@ -31,8 +31,8 @@
           "Segoe UI", sans-serif;
         background: var(--bg);
         color: var(--text);
-        line-height: 1.7;
-        letter-spacing: -0.015em;
+        line-height: 1.8;
+        letter-spacing: -0.01em;
       }
 
       img {
@@ -46,16 +46,16 @@
       }
 
       .container {
-        width: min(1080px, 92vw);
+        width: min(1040px, 92vw);
         margin: 0 auto;
       }
 
       header {
-        padding: 36px 0 24px;
+        padding: 32px 0 20px;
         position: sticky;
         top: 0;
-        background: rgba(255, 255, 255, 0.92);
-        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
         border-bottom: 1px solid transparent;
         z-index: 10;
       }
@@ -76,7 +76,8 @@
         gap: 32px;
         font-size: 0.9rem;
         color: var(--text-soft);
-        letter-spacing: 0.02em;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
       .nav-links a {
@@ -88,7 +89,7 @@
       }
 
       .hero {
-        padding: 140px 0 160px;
+        padding: 160px 0 180px;
         text-align: center;
       }
 
@@ -97,13 +98,14 @@
         letter-spacing: 0.4em;
         font-size: 0.75rem;
         color: var(--text-soft);
-        margin-bottom: 20px;
+        margin-bottom: 24px;
       }
 
       .hero h1 {
-        font-size: clamp(3rem, 6.5vw, 5.6rem);
-        font-weight: 500;
-        margin-bottom: 28px;
+        font-size: clamp(3.2rem, 6.8vw, 6rem);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        margin-bottom: 32px;
       }
 
       .hero p {
@@ -114,7 +116,7 @@
       }
 
       .section {
-        padding: 130px 0;
+        padding: 150px 0;
       }
 
       .vision {
@@ -122,32 +124,33 @@
       }
 
       .vision h2 {
-        font-size: clamp(2.4rem, 5vw, 4.2rem);
-        font-weight: 500;
+        font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+        font-weight: 600;
+        letter-spacing: -0.015em;
       }
 
       .product {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 64px;
+        gap: 72px;
         align-items: center;
       }
 
       .product img {
-        border-radius: 22px;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+        border-radius: 18px;
+        border: 1px solid var(--line);
       }
 
       .product h3 {
-        font-size: clamp(2rem, 4vw, 3.4rem);
-        font-weight: 500;
-        margin-bottom: 14px;
+        font-size: clamp(2.1rem, 4.2vw, 3.6rem);
+        font-weight: 600;
+        margin-bottom: 16px;
       }
 
       .product .tagline {
         font-size: clamp(1.2rem, 2.6vw, 1.6rem);
         color: var(--text-soft);
-        margin-bottom: 22px;
+        margin-bottom: 24px;
       }
 
       .product p {
@@ -161,18 +164,19 @@
       }
 
       .closing {
-        background: #f7f7f9;
+        background: #fbfbfc;
         text-align: center;
-        padding: 140px 0;
+        padding: 160px 0;
       }
 
       .closing h2 {
-        font-size: clamp(2.4rem, 5vw, 4.2rem);
-        font-weight: 500;
+        font-size: clamp(2.6rem, 5.4vw, 4.4rem);
+        font-weight: 600;
+        letter-spacing: -0.015em;
       }
 
       footer {
-        padding: 52px 0 72px;
+        padding: 56px 0 80px;
         text-align: center;
         color: var(--text-soft);
         font-size: 0.85rem;
@@ -181,8 +185,8 @@
 
       .fade-up {
         opacity: 0;
-        transform: translateY(14px);
-        animation: fadeUp 0.9s ease forwards;
+        transform: translateY(12px);
+        animation: fadeUp 0.8s ease forwards;
       }
 
       .delay-1 {
@@ -214,11 +218,11 @@
         }
 
         .hero {
-          padding: 100px 0 120px;
+          padding: 110px 0 130px;
         }
 
         .section {
-          padding: 90px 0;
+          padding: 100px 0;
         }
 
         .product {
